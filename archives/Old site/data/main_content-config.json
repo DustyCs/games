@@ -1,0 +1,18 @@
+[
+    {
+        "id": {"value": "0"},
+
+        "parent": {"value": null},
+
+        "title": {"value": "Blog Site Underworks! + PostMaker Project", "type":"txt", "class":"project-title", "parent_class": ".post-title"},
+
+        "image": {"value": "/images/blog-img/coming_soon.png", 
+        
+        "type":"img", "class":"project-img", "parent_class": ".post-content"}, 
+
+        "description": {"value": "The blog site is here!!! 25/11/2024! I really didn't think that I'll be able to actually push through my lazyness and do something like this but here I am!",
+        
+        "type":"txt", "class":"project-description", "parent_class": ".post-content"}
+    }
+    
+]

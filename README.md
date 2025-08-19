@@ -1,0 +1,3 @@
+# DustyCS Personal Site
+
+Well vanila js with html and css was fine but times are changing so...
