@@ -1,106 +1,107 @@
-import ComponentSlider from '../components/SlideShow'
-import RPSOnline from '../../../assets/projects/RPSOnline.png'
-import IntroductionBG from '../../../assets/projects/SliderBG2.png'
 import DustyCS from '../../../assets/projects/DustyChar.png'
+import { gamesData, oldGamesData } from '../data/gamesData'
 
-import ProjectLatest from "../../../assets/projects/GameLatest.png"
-import GameLatest from "../../../assets/projects/Slimes Hometown.png"
-
+import { setCategoryOnLocalStorage } from '../../../utils/helper'
 import { motion, useAnimation } from 'framer-motion'
-import { useEffect } from 'react'
-import LatestRelease from '../components/LatestRelease'
-import LicenseToUse from '../components/LicenseToUse'
-
-function Introduction() {
-  return ( // just testing for now adding responsiveness
-    <div className="flex grow-0 overflow-hidden border sm:h-[20rem] relative pointer-events-none
-                    flex-col items-center sm:items-start sm:flex-row">
-      <div className="text-2xl w-[100%] sm:w-[35%] flex px-4 z-10 flex-col">
-        <div className='text-4xl font-extrabold'>DustyHansCS</div>
-        <div>
-          <p className="text-md">Personal Site</p>
-          <p>I'm a developer</p>
-        </div>
-      </div>
-      <div className="relative w-[65%] sm:h-full overflow-hidden">
-        <img
-          src={IntroductionBG}
-          alt="Online RPS Site"
-          className="w-screen sm:h-[19.9rem] object-bottom shadow-2xl"
-        />
-        <motion.div
-          className="absolute bottom-[1rem] right-0 w-[20%] h-[60%] z-20"
-          animate={{
-            y: [-35],
-            x: ["0vw", "-10vw", "-25vw", "-40vw", "-60vw"],
-            rotate: [20, -10, -5, -5, 5, -10, -10, 20],
-          }}
-          style={{ bottom: '1rem', top: 'auto' }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
-          }}
-        >
-          <img
-            src={DustyCS}
-            alt=""
-            className="w-full h-full object-contain drop-shadow-lg"
-          />
-        </motion.div>
-      </div>
-    </div>
-  );
-}
-
-// refactor this 2
-
-function LatestProject(){
-    return (
-    <div className="flex grow-0 overflow-hidden h-[20rem] relative pointer-events-none">
-      <div className="text-2xl w-[35%] flex items-center px-4 z-10">
-        Project
-      </div>
-      <div className="relative w-[65%] h-full overflow-hidden">
-        <img
-          src={ProjectLatest}
-          alt="Online RPS Site"
-          className="w-screen h-[19.9rem] object-bottom shadow-2xl"
-        />
-      </div>
-    </div>
-    )
-}
-
-function LatestGame(){
-    return (
-        <div className="flex grow-0 overflow-hidden h-[20rem] relative pointer-events-none">
-            <div className="text-2xl w-[35%] flex items-center px-4 z-10">
-                Game
-            </div>
-            <div className="relative w-[65%] h-full overflow-hidden">
-                <img
-                src={GameLatest}
-                alt="Online RPS Site"
-                className="w-screen h-[19.9rem] object-bottom shadow-2xl"
-                />
-            </div>
-        </div>
-    )
-}
+import { useEffect, useState } from 'react'
+import GameCard from '../components/gameCard'
 
 export default function HomePage() {
+  const [currentCategory, setCurrentCategory] = useState('Horror')
+  const [tags, setTags] = useState([])
+
+  console.log("data", gamesData[0])
+
+  useEffect(() => {
+    const storedCategory = localStorage.getItem('currentCategory')
+    if (storedCategory) {
+      setCurrentCategory(storedCategory)
+    }
+  }, [])
+
+  const controls = useAnimation()
+
+  const gameTags = [
+    { name: 'Horror', id: 1 },
+    { name: 'Action', id: 2 },
+    { name: 'Adventure', id: 3 },
+    { name: 'Puzzle', id: 4 },
+  ]
+
+  const handleChange = (id) => {
+    setTags((prev) =>
+      prev.includes(id)
+        ? prev.filter((tagId) => tagId !== id)
+        : [...prev, id]
+    );
+  };
+
   return (
     <div className='h-full'>
-        <ComponentSlider slides={[Introduction, LatestProject, LatestGame]}/>
-        <div className='w-[95vw] m-auto grid grid-cols-2 bg-gray-50'>
-            <div className='w-full col-span-1'>
-              <h1 className='text-2xl px-4'>GitHub Contributions <span className='text-xs'>some commits are missing</span></h1>
-              <img onClick={() => window.open("https://github.com/DustyCs")} src="https://ghchart.rshah.org/DustyCs" alt="GitHub Contributions Chart" />
+        <div className='w-[95vw] m-auto mt-1'>
+            <h1 className='text-6xl px-4 font-extrabold mb-4'>Games</h1>
+            <div className='sm:flex w-full'>
+              <div className='bg-gray-100'>
+                <div className=''>
+                  <h2 className='text-2xl font-bold'>Category</h2>
+                  <select 
+                    className='w-full p-2 rounded-md border-2 border-gray-300'
+                    value={currentCategory}
+                    onChange={(e) => {
+                      setCurrentCategory(e.target.value)
+                      setCategoryOnLocalStorage(e.target.value)
+                    }}
+                  >
+                      <option value="Horror">Horror</option>
+                      <option value="Action">Action</option>
+                      <option value="Adventure">Adventure</option>
+                      <option value="Puzzle">Puzzle</option>
+                  </select>
+                </div>
+                <div>
+                  <motion.img
+                    src={DustyCS}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                  />
+                </div>
+                <div>
+                  <h4 className='text-xl'>Filter</h4>
+                  <div>
+                    {
+                      gameTags.map((tag) => (
+                        <div key={tag.id}>
+                          <label>
+                            <input type="checkbox" checked={tags.includes(tag.id)} onChange={() => handleChange(tag.id)} />
+                            {tag.name}
+                          </label>
+                        </div>
+                      ))
+                    }
+                  </div>
+                  <div style={{ marginTop: "1rem" }}>
+                    <strong>Selected Tags:</strong> {tags.map((tagId) => gameTags.find((tag) => tag.id === tagId).name).join(", ")}
+                  </div>
+                </div>
+              </div>
+              <div className='sm:grid sm:grid-cols-3 auto-rows-max grid-flow-dense sm:gap-4 sm:px-4 mt-4 w-full'> 
+                  <div className='sm:col-span-2 sm-row-span-2 bg-red-300'>
+                    {/* <GameCard props={gamesData[0]}/> Wrong way to pass props */}
+                    <GameCard {...gamesData[0]}/>
+                  </div>
+                  {oldGamesData.map((game, index) => (
+                    <div className='p-4' key={index}>
+                      <GameCard key={index} {...game} />
+                    </div>
+                  ))}
+                  {/* <div className="bg-blue-300 p-4">Card 2</div>
+                  <div className="bg-green-300 p-4">Card 3</div>
+                  <div className="bg-yellow-300 p-4">Card 4</div>
+                  <div className="bg-purple-300 p-4">Card 5</div> */}
+              </div>
+      
             </div>
-            <LatestRelease />
-            <LicenseToUse/>
         </div>
     </div>
   )
