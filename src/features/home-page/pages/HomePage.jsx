@@ -5,6 +5,7 @@ import { setCategoryOnLocalStorage } from '../../../utils/helper'
 import { motion, useAnimation } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import GameCard from '../components/gameCard'
+import GamesCard from '../components/gamesCard'
 
 export default function HomePage() {
   const [currentCategory, setCurrentCategory] = useState('Horror')
@@ -92,13 +93,9 @@ export default function HomePage() {
                   </div>
                   {oldGamesData.map((game, index) => (
                     <div className='p-4' key={index}>
-                      <GameCard key={index} {...game} />
+                      <GamesCard key={index} {...game} />
                     </div>
                   ))}
-                  {/* <div className="bg-blue-300 p-4">Card 2</div>
-                  <div className="bg-green-300 p-4">Card 3</div>
-                  <div className="bg-yellow-300 p-4">Card 4</div>
-                  <div className="bg-purple-300 p-4">Card 5</div> */}
               </div>
       
             </div>

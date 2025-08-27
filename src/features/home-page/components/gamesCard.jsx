@@ -1,4 +1,4 @@
-export default function gamesCard({ images, title, category, tags, link }) {
+export default function GamesCard({ images, title, category, tags, link }) {
   return (
     <div className='shadow-lg rounded-lg h-full w-full'>
         <div className="flex flex-col">
