@@ -51,7 +51,7 @@ export const oldGamesData = [
         description: "This is a classic game description.",
         releaseDate: "2021-01-01",
         category: "Horror",
-        tags: ["horror", "survival"],
+        tags: ["horror", "survival", "running"],
         link: "https://example.com/classic-game-link"
     },
     {

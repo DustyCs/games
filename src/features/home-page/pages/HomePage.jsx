@@ -7,11 +7,48 @@ import { useEffect, useState } from 'react'
 import GameCard from '../components/gameCard'
 import GamesCard from '../components/gamesCard'
 
+
+const gameTags = [
+    { name: 'Horror', id: 1 },
+    { name: 'Action', id: 2 },
+    { name: 'Adventure', id: 3 },
+    { name: 'Puzzle', id: 4 },
+    { name: 'Running', id: 5 },
+  ]
+
 export default function HomePage() {
   const [currentCategory, setCurrentCategory] = useState('Horror')
   const [tags, setTags] = useState([])
 
-  console.log("data", gamesData[0])
+  const allGames = [...gamesData, ...oldGamesData]
+
+  // const filteredGames = allGames.filter((game) => {
+  //   const categoryMatch = currentCategory ? game.category === currentCategory : true;
+
+  //   const tagMatch = tags.length > 0 ? tags.every((tagId) => game.tags.includes(gameTags.find((tag) => tag.id === tagId).name)) : true;
+
+  //   return categoryMatch && tagMatch;
+  // })
+
+  const filteredGames = allGames.filter((game) => {
+    const categoryMatch = currentCategory ? game.category === currentCategory : true;
+
+    const tagMatch =
+      tags.length > 0
+        ? tags.some((tagId) => {
+            const selectedTagName = gameTags.find((tag) => tag.id === tagId)?.name.toLowerCase();
+            return game.tags.some((t) => t.toLowerCase() === selectedTagName);
+          })
+        : true;
+
+    return categoryMatch && tagMatch;
+  });
+
+  // console.log("data", gamesData[0])
+
+  const showFeautured = tags.length === 0 && filteredGames.length > 0
+
+  console.log("filteredGames", filteredGames)
 
   useEffect(() => {
     const storedCategory = localStorage.getItem('currentCategory')
@@ -21,13 +58,6 @@ export default function HomePage() {
   }, [])
 
   const controls = useAnimation()
-
-  const gameTags = [
-    { name: 'Horror', id: 1 },
-    { name: 'Action', id: 2 },
-    { name: 'Adventure', id: 3 },
-    { name: 'Puzzle', id: 4 },
-  ]
 
   const handleChange = (id) => {
     setTags((prev) =>
@@ -87,17 +117,35 @@ export default function HomePage() {
                 </div>
               </div>
               <div className='sm:grid sm:grid-cols-3 auto-rows-max grid-flow-dense sm:gap-4 sm:px-4 mt-4 w-full'> 
-                  <div className='sm:col-span-2 sm-row-span-2 bg-red-300'>
-                    {/* <GameCard props={gamesData[0]}/> Wrong way to pass props */}
-                    <GameCard {...gamesData[0]}/>
-                  </div>
-                  {oldGamesData.map((game, index) => (
-                    <div className='p-4' key={index}>
-                      <GamesCard key={index} {...game} />
+                {tags.length === 0 && currentCategory === "Horror" ? (
+                  // Default layout
+                  <>
+                    <div className='sm:col-span-2 sm:row-span-2'>
+                      <GameCard {...gamesData[0]} />
                     </div>
-                  ))}
+                    {oldGamesData.map((game, index) => (
+                      <div className='p-4' key={index}>
+                        <GamesCard {...game} />
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  // Filtered layout
+                  <>
+                    {filteredGames.length > 0 ? (
+                      filteredGames.map((game, index) => (
+                        <div className='p-4' key={index}>
+                          <GamesCard {...game} />
+                        </div>
+                      ))
+                    ) : (
+                      <p className='text-gray-500 col-span-3'>No games found for this filter.</p>
+                    )}
+                  </>
+                )}
               </div>
-      
+
+
             </div>
         </div>
     </div>
