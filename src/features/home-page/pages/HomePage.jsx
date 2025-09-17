@@ -9,26 +9,18 @@ import GamesCard from '../components/gamesCard'
 
 
 const gameTags = [
-    { name: 'Horror', id: 1 },
-    { name: 'Action', id: 2 },
-    { name: 'Adventure', id: 3 },
-    { name: 'Puzzle', id: 4 },
-    { name: 'Running', id: 5 },
+    { name: 'Action', id: 1 },
+    { name: 'Adventure', id: 2 },
+    { name: 'Puzzle', id: 3 },
+    { name: 'Running', id: 4 },
+    { name: 'Horror', id: 5 },
   ]
 
 export default function HomePage() {
-  const [currentCategory, setCurrentCategory] = useState('Horror')
+  const [currentCategory, setCurrentCategory] = useState('All')
   const [tags, setTags] = useState([])
 
   const allGames = [...gamesData, ...oldGamesData]
-
-  // const filteredGames = allGames.filter((game) => {
-  //   const categoryMatch = currentCategory ? game.category === currentCategory : true;
-
-  //   const tagMatch = tags.length > 0 ? tags.every((tagId) => game.tags.includes(gameTags.find((tag) => tag.id === tagId).name)) : true;
-
-  //   return categoryMatch && tagMatch;
-  // })
 
   const filteredGames = allGames.filter((game) => {
     const categoryMatch = currentCategory ? game.category === currentCategory : true;
@@ -43,8 +35,6 @@ export default function HomePage() {
 
     return categoryMatch && tagMatch;
   });
-
-  // console.log("data", gamesData[0])
 
   const showFeautured = tags.length === 0 && filteredGames.length > 0
 
@@ -72,9 +62,9 @@ export default function HomePage() {
         <div className='w-[95vw] m-auto mt-1'>
             <h1 className='text-6xl px-4 font-extrabold mb-4'>Games</h1>
             <div className='sm:flex w-full'>
-              <div className='bg-gray-100'>
+              <div className='bg-gray-100 h-full shadow-md shadow-rose-700 sm:max-w-[13rem]'>
                 <div className=''>
-                  <h2 className='text-2xl font-bold'>Category</h2>
+                  <h2 className='text-2xl font-bold justify-center flex'>Category</h2>
                   <select 
                     className='w-full p-2 rounded-md border-2 border-gray-300'
                     value={currentCategory}
@@ -83,6 +73,7 @@ export default function HomePage() {
                       setCategoryOnLocalStorage(e.target.value)
                     }}
                   >
+                      <option value="All">All</option>
                       <option value="Horror">Horror</option>
                       <option value="Action">Action</option>
                       <option value="Adventure">Adventure</option>
@@ -92,12 +83,12 @@ export default function HomePage() {
                 <div>
                   <motion.img
                     src={DustyCS}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
+                    initial={{ rotate: -5 }}
+                    animate={{ rotate: 10 }}
+                    transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
                   />
                 </div>
-                <div>
+                <div className='px-2'>
                   <h4 className='text-xl'>Filter</h4>
                   <div>
                     {
@@ -117,10 +108,10 @@ export default function HomePage() {
                 </div>
               </div>
               <div className='sm:grid sm:grid-cols-3 auto-rows-max grid-flow-dense sm:gap-4 sm:px-4 mt-4 w-full'> 
-                {tags.length === 0 && currentCategory === "Horror" ? (
+                {tags.length === 0 && currentCategory === "All" ? (
                   // Default layout
                   <>
-                    <div className='sm:col-span-2 sm:row-span-2'>
+                    <div className='sm:col-span-2 sm:row-span-1'>
                       <GameCard {...gamesData[0]} />
                     </div>
                     {oldGamesData.map((game, index) => (
@@ -144,8 +135,6 @@ export default function HomePage() {
                   </>
                 )}
               </div>
-
-
             </div>
         </div>
     </div>

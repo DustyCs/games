@@ -1,83 +1,78 @@
+import slime_game1 from "../../../assets/games/slime adventure/1.jpg"
+import slime_game2 from "../../../assets/games/slime adventure/2.jpg"
+import slime_game3 from "../../../assets/games/slime adventure/3.jpg"
+import slime_game4 from "../../../assets/games/slime adventure/6.jpg"
+
+import bob_squares from "../../../assets/games/BobSquares/1.jpg"
+import cube_land from "../../../assets/games/CubeLand/1.jpg"
+import thebasement from "../../../assets/games/The Basement/1.jpg"
+import xorcism from "../../../assets/games/Xorcism/1.jpg"
+
 export const gamesData = [
     {
         images: [
-            "https://example.com/image1.jpg",
-            "https://example.com/image2.jpg"
+            slime_game4,
+            slime_game1,
+            slime_game2,
+            slime_game3
         ],
         video: "https://example.com/video.mp4",
-        title: "Example Game",
-        description: "This is an example game description.",
-        releaseDate: "2023-10-01",
-        category: "Action",
-        tags: ["multiplayer", "adventure"],
-        link: "https://example.com/game-link"
+        title: "A Slime's Small Hometown",
+        description: "I have finally released a Beta Version of my first ever game on Itch.io",
+        releaseDate: "2025-09-16",
+        category: "Adventure",
+        tags: ["singleplayer", "exploration"],
+        link: "https://dustyhanscs.itch.io/a-slimes-small-hometown"
     },
 ]
 
 export const oldGamesData = [
     {
         images: [
-            "https://example.com/image3.jpg",
-            "https://example.com/image4.jpg"
+            thebasement
         ],
         video: "https://example.com/video2.mp4",
-        title: "Another Game",
-        description: "This is another game description.",
+        title: "The Basement",
+        description: "Release Soon",
         releaseDate: "2023-11-01",
-        category: "Adventure",
-        tags: ["singleplayer", "exploration"],
-        link: "https://example.com/another-game-link"
+        category: "Horror",
+        tags: ["singleplayer", "exploration", "dungeon", "thrill", "psychological"],
+        link: "soon"
     },
     {
         images: [
-            "https://example.com/image5.jpg",
-            "https://example.com/image6.jpg"
+            xorcism
         ],
         video: "https://example.com/video3.mp4",
-        title: "Old Game",
+        title: "Xorcism(Discontinued)",
         description: "This is an old game description.",
         releaseDate: "2022-05-01",
-        category: "Puzzle",
-        tags: ["puzzle", "strategy"],
-        link: "https://example.com/old-game-link"
+        category: "Action",
+        tags: ["strategy"],
+        link: false
     },
     {
         images: [
-            "https://example.com/image7.jpg",
-            "https://example.com/image8.jpg"
+            cube_land
         ],
         video: "https://example.com/video4.mp4",
-        title: "Classic Game",
+        title: "Cube Land(Discontinued)",
         description: "This is a classic game description.",
         releaseDate: "2021-01-01",
-        category: "Horror",
-        tags: ["horror", "survival", "running"],
-        link: "https://example.com/classic-game-link"
+        category: "Puzzle",
+        tags: ["strategy"],
+        link: false
     },
     {
         images: [
-            "https://example.com/image9.jpg",
-            "https://example.com/image10.jpg"
+            bob_squares
         ],
         video: "https://example.com/video5.mp4",
-        title: "Retro Game",
+        title: "Bob Square(Discontinued)",
         description: "This is a retro game description.",
         releaseDate: "2020-12-01",
         category: "Action",
-        tags: ["retro", "action"],
-        link: "https://example.com/retro-game-link"
-    },
-    {
-        images: [
-            "https://example.com/image11.jpg",
-            "https://example.com/image12.jpg"
-        ],
-        video: "https://example.com/video6.mp4",
-        title: "Indie Game",
-        description: "This is an indie game description.",
-        releaseDate: "2023-09-01",
-        category: "Adventure",
-        tags: ["indie", "exploration"],
-        link: "https://example.com/indie-game-link"
-    },
+        tags: ["retro"],
+        link: false
+    }
 ]
